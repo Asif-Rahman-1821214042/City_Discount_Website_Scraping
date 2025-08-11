@@ -3,17 +3,19 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import pandas as pd
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 
 #dataframe
 df=pd.read_csv("output_cleaned.csv")
 
 #driver setup
+service=Service("/usr/bin/chromedriver")
 chrome_options = Options()
 chrome_options.page_load_strategy = "eager"
 prefs = {"profile.managed_default_content_settings.images": 2}
 chrome_options.add_experimental_option("prefs", prefs)
 # chrome_options.add_argument("--headless")
-driver = webdriver.Chrome(options=chrome_options)   # Launch Chrome browser
+driver = webdriver.Chrome(options=chrome_options,service=service)   # Launch Chrome browser
 driver.implicitly_wait(1)   # Waits up to 8s for elements to appear # Opens LinkedIn
 driver.maximize_window()
 time.sleep(15)
